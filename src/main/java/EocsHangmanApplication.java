@@ -1,5 +1,10 @@
 import service.WordGeneratorUtil;
 
+
+import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAmount;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
@@ -29,11 +34,15 @@ public class EocsHangmanApplication {
         }
         Scanner scanner = new Scanner(System.in);
         Pattern pattern = Pattern.compile("(\\d)\\s([a-z])", Pattern.CASE_INSENSITIVE);
-        int plank = 10;
+        int misstrials = 0;
+        final int validMisstrials = 10;
+        int tries = 0;
+        ZonedDateTime timestamp = ZonedDateTime.now();
+
 
 
         // one loop is a round in this game
-        while (plank > 0) {
+        while (misstrials < validMisstrials) {
             // print out the UI
             System.out.println("################################################################");
             System.out.println("\t\tEurofunk eOCS Hangman Game");
@@ -48,7 +57,9 @@ public class EocsHangmanApplication {
                 System.out.print(wordChars[i] + "\t");
             }
             System.out.println("\n" + message);
-            System.out.println("\nTries left: " + plank);
+            System.out.println("\nMisstrials: " + misstrials + "/" + validMisstrials );
+            System.out.println("Time neeeded: " + (timestamp.until(ZonedDateTime.now(), ChronoUnit.SECONDS) ) + " seconds");
+            tries += 1;
             System.out.println();
 
 //          waiting for user input
@@ -79,7 +90,7 @@ public class EocsHangmanApplication {
                 message = "You're right! Try the next one!";
                 legalIndexes.remove(insertedIndex);
             } else {
-                plank -= 1;
+                misstrials += 1;
                 message = "What a pity, that was wrong. Try again!";
             }
 
