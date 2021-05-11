@@ -106,6 +106,7 @@ public class EocsHangmanApplication {
             if (!contains_) {
                 System.out.println("***************************************************");
                 System.out.println("\t\t You won! ");
+                System.out.println("Time neeeded: " + (timestamp.until(ZonedDateTime.now(), ChronoUnit.SECONDS) ) + " seconds");
                 System.out.println("***************************************************");
                 return;
             }
